@@ -7,9 +7,9 @@ module Cucumber
       attr_reader :duration
 
       define_method(:invoke) do |multiline_arg|
-        start_time = Time.now
+        start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
         ret = old_invoke.bind(self).call(multiline_arg)
-        @duration = Time.now - start_time
+        @duration = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
         ret
       end
     end
